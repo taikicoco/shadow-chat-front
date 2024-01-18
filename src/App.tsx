@@ -1,17 +1,11 @@
-import { useState } from 'react'
 import './App.css'
 
 function App () {
-    const [count, setCount] = useState(0)
-
     return (
         <>
-            <h1>Shadow Chat</h1>
-            <div className="card">
-                <button onClick={() => setCount((count) => count + 1)}>
-                count is {count}
-                </button>               
-            </div>
+            <h1
+                className='text-4xl text-center font-bold border-b-4 border-gray-600 p-4 m-14'
+            >Shadow Chat</h1>
         </>
     )
 }
