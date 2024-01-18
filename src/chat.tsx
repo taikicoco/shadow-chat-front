@@ -4,23 +4,20 @@ interface Message {
     text: string;
 }
 
-// メッセージリストコンポーネント
 const MessageList = ({ messages }: { messages: Message[] }) => (
-    <div className="message-list">
+    <div className="message-list max-w-lg mx-auto overflow-y-auto">
         {messages.map((message, index) => (
-            <div key={index} className="message">
+            <div key={index} className="message bg-white border-2 border-gray-300 rounded-lg p-2 my-2">
                 {message.text}
             </div>
         ))}
     </div>
 );
 
-// トーク画面コンポーネント
 const ChatApp = () => {
     const [messages, setMessages] = useState<Message[]>([]);
     const [newMessage, setNewMessage] = useState<string>('');
 
-    // メッセージの送信処理
     const sendMessage = () => {
         const trimmedMessage = newMessage.trim();
         if (trimmedMessage) {
@@ -29,10 +26,7 @@ const ChatApp = () => {
         }
     };
 
-    // インプットフィールドの変更をハンドル
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => setNewMessage(e.target.value);
-
-    // エンターキーでメッセージを送信
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
             event.preventDefault();
@@ -48,8 +42,13 @@ const ChatApp = () => {
                 value={newMessage}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
+                className="border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none focus:border-blue-500"
             />
-            <button onClick={sendMessage}>送信</button>
+            <button 
+                onClick={sendMessage}
+                className="border-2 border-gray-300 bg-white h-10 px-5 rounded-lg text-sm focus:outline-none focus:border-blue-500"
+            >Submit
+            </button>
         </div>
     );
 };
