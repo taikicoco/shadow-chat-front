@@ -1,7 +1,12 @@
-import { ApolloProvider, gql, useQuery } from '@apollo/client';
+import { 
+    ApolloProvider,
+    gql,
+    useSubscription,
+    ApolloClient,
+    HttpLink,
+    InMemoryCache,
+} from '@apollo/client';
 
-// applo client
-import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 const client = new ApolloClient({
     cache: new InMemoryCache(),
     link: new HttpLink({
@@ -9,14 +14,15 @@ const client = new ApolloClient({
     }),
 });
 
-const QUERY = gql`
-    query {
-        messages{
-        id
-        text
+// サブスクリプションクエリ
+const MESSAGE_POSTED_SUBSCRIPTION = gql`
+    subscription {
+        messagePosted(id: 1) {
+            id
+            text
         }
     }
-`
+`;
 
 interface Message {
     id: number;
@@ -24,17 +30,17 @@ interface Message {
 }
 
 const Message = () => {
-    const { loading, error, data } = useQuery(QUERY);
+    const { data, loading, error } = useSubscription(MESSAGE_POSTED_SUBSCRIPTION);
 
     if (loading) return <p>...loading</p>;
     if (error) return <p>{error.message}</p>;
 
     return (
         <div>
-            <h1>Get Message from GraphQL</h1>
-            {data && data.messages && data.messages.map((message: Message) => (
-                <p key={message.id}>{message.text}</p>
-            ))}
+            <h1>Message from subscription</h1>
+            {data && data.messagePosted && (
+                <p key={data.messagePosted.id}>{data.messagePosted.text}</p>
+            )}
         </div>
     );
 }
