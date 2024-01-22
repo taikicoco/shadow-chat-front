@@ -14,7 +14,6 @@ const client = new ApolloClient({
     }),
 });
 
-// サブスクリプションクエリ
 const MESSAGE_POSTED_SUBSCRIPTION = gql`
     subscription {
         messagePosted(id: 1) {
@@ -45,7 +44,7 @@ const Message = () => {
     );
 }
 
-function App2 () {
+function Messages () {
     return (
         <ApolloProvider client={client}>
             <Message />            
@@ -53,4 +52,4 @@ function App2 () {
     );
 }
 
-export default App2;
+export default Messages;
