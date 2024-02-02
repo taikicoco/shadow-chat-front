@@ -1,14 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import Messages from './message.tsx'
-import ChatApp from './chat.tsx'
+import Header from './layouts/Header.tsx'
+import Footer from './layouts/Footer.tsx'
+import Chat from './layouts/Chat.tsx'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <App />
-        <Messages />
-        <ChatApp />
+        <div className="font-mono">
+            <Header />
+            <Chat />
+            <Footer />
+        </div>
     </React.StrictMode>,
-)
+);
