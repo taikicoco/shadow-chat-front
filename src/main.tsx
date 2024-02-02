@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import Messages from './message.tsx'
+import Messages from './Message.tsx'
 import ChatApp from './chat.tsx'
 import './index.css'
 
