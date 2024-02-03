@@ -35,7 +35,7 @@ const Messages = ({ messages }: { messages: Message[] }) => {
     );
 };
 
-const SubMessage = ({ id }: { id: number }) : Message|null => {
+const getMessage = ({ id }: { id: number }) : Message|null => {
     const [message, setMessage] = useState<Message2 | null>(null);
     useEffect(() => {
         const fetchAndSetMessage = async () => {
@@ -65,7 +65,7 @@ const SubMessage = ({ id }: { id: number }) : Message|null => {
 };
 
 const MessageList = () => {
-    const message = SubMessage({ id: 1 });
+    const message = getMessage({ id: 1 });
     if (!message) return null;
     const messages = [message];
 
