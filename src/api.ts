@@ -14,13 +14,18 @@ const MESSAGE_POSTED_SUBSCRIPTION = `
 
 const MESSAGE_POSTED_MUTATION = `
     mutation PostMessage($id: ID!, $text: String!) {
-        postMessage(id: $id, text: $text)
+        postMessage(id: $id, text: $text) {
+            id
+            text
+            type
+        }
     }
 `;
 
 interface Message {
     id: string;
     text: string;
+    type: string;
 }
 
 interface SubscriptionResponse {    
@@ -28,7 +33,9 @@ interface SubscriptionResponse {
 }
 
 interface MutationResponse {
-    postMessage: number;
+    id: number;
+    text: string;
+    type: string;
 }
 
 export async function fetchMessageData (id: number): Promise<Message | null> {
@@ -43,12 +50,12 @@ export async function fetchMessageData (id: number): Promise<Message | null> {
     }
 }
 
-export async function postMessageData (message: Message): Promise<number> {
+export async function postMessageData (message: Message): Promise<MutationResponse> {
     const variables = { id: message.id, text: message.text };
 
     try {
         const res = await client.request<MutationResponse>(MESSAGE_POSTED_MUTATION, variables);
-        return res.postMessage;
+        return res
     } catch (error) {
         console.error("Error posting message data:", error);
         throw error;

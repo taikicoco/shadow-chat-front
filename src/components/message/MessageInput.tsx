@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { FormEvent } from 'react';
 import { postMessageData } from '../../api';
@@ -6,20 +5,22 @@ import { postMessageData } from '../../api';
 interface Message {
     id: string;
     text: string;
+    type: string;
 }
 
-const MessageInput = () => {
+const MessageInput = (props:any) => {
     const [message, setMessage] = useState<string>('');
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const postMessageData : Message = {
             id: '1',
-            text: message
+            text: message,
+            type: 'sent'
         };
         const res = postMessage({ message: postMessageData });
-        console.log('Message sent:', res);
-        setMessage('');        
+        props.handleValueChange(res);
+        setMessage('');  
     };
 
     return (
