@@ -1,17 +1,10 @@
-import { useEffect, useState } from 'react';
-import { fetchMessageData } from '../../api';
 
 interface Message {
     text: string;
     type: 'sent' | 'received';
 }
 
-interface Message2 {
-    id: string;
-    text: string;
-}
-
-const Messages = ({ messages }: { messages: Message[] }) => {
+const Messages = ({ messages }: { messages: Message[]}) => {
     return (
         <>
             {messages.map((message, index) => {
@@ -35,40 +28,9 @@ const Messages = ({ messages }: { messages: Message[] }) => {
     );
 };
 
-const getMessage = ({ id }: { id: number }) : Message|null => {
-    const [message, setMessage] = useState<Message2 | null>(null);
-    useEffect(() => {
-        const fetchAndSetMessage = async () => {
-            try {
-                const data = await fetchMessageData(id);
-                if (data) {
-                    setMessage(data);
-                }
-                
-            } catch (error) {
-                console.error("Error fetching message data:", error);
-            } finally {
-                console.log("Message data fetched!");
-            }
-        };
-
-        fetchAndSetMessage();
-    }, [id]);
-
-    if (!message) return null;
-
-    const resMessage: Message = {
-        text: message.text,
-        type: 'received',
-    };
-    return resMessage;
-};
-
-const MessageList = () => {
-    const message = getMessage({ id: 1 });
-    if (!message) return null;
-    const messages = [message];
-
+const MessageList = (props : { messages: Message[] | null}) => {
+    const { messages } = props;
+    if (!messages) return null;
     return (
         <div>
             <Messages messages={messages} />
